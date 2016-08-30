@@ -7,14 +7,15 @@ const posts = require('./routes/posts');
 
 // Set up database
 const mongoose = require('mongoose');
-// TODO: You need to write the line to connect to the mongo database
+mongoose.connect('mongodb://localhost/crud-posts');
 
 // Create our instance of our app
 const app = express();
 
 // Add middleware
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// TODO: Add a comment here explaining, briefly, what bodyParser is doing to our request
+// It forms a middleware that helps to parse form data
 
 // Set our views directory
 app.set('views', path.join(__dirname, 'views'));
@@ -29,7 +30,7 @@ app.get('/', (req, res, next) => {
 });
 
 // Register our routes
-// TODO: Register our `posts` routes name-spaced under '/posts'
+app.use('/posts', posts);
 
 const port = 3000;
 app.listen(port, () => {
